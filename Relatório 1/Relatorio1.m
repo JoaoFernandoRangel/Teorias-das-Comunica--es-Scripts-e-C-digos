@@ -9,8 +9,8 @@ Se erroAcumuladoPlot = 1 mostra o erroAcumulado em um gráfico
 se erroAcumuladoPrint = 1 imprime o valor do erroAcumulado no terminal
 %}
 discreto = 0;
-erroAcumuladoPlot = 0;
-erroAcumuladoPrint = 0;
+erroAcumuladoPlot = 1;
+erroAcumuladoPrint = 1;
 
 % intervalo de tempo entre amostras
 deltaT = 1e-4;
@@ -23,8 +23,8 @@ Tempo = T0:deltaT:Tf; % vetor tempo
 Xt = cos(100*pi*Tempo);
 
 
-resol = [2 4 6 8 10 16]; % número de bits
-erroAcumulado = [0 0 0 0 0 0]; %inicializado vetor de erroAcumulado
+resol = [2 4 6 8 16]; % número de bits
+erroAcumulado = [0 0 0 0 0]; %inicializado vetor de erroAcumulado
 
 figure (1)
 subplot(2,1,2)
@@ -38,7 +38,7 @@ for i = 1:length(resol)
     Yt = Yt + round(mi); % retorna os valores negativos
     
     %Faz a soma do erro absoluto para cada resolução diferente.
-    erroAcumulado(i) = sum(sqrt(((Xt.^2)-(Yt.^2)).^2));
+    erroAcumulado(i) = sum(abs(abs(Xt)-abs(Yt)));
     %Plota os valores de acordo com o método escolhido no inicio
     if (discreto == 1)
     stem(Tempo, Yt)
@@ -51,7 +51,7 @@ title("Sinais convertidos");
 % Adicionar legenda
 hLegend = legend([num2str(resol(1)) ' bits'], [num2str(resol(2)) ' bits'],...
                     [num2str(resol(3)) ' bits'],[num2str(resol(4)) ' bits'],...
-                        [num2str(resol(5)) ' bits'], [num2str(resol(6)) ' bits']);
+                        [num2str(resol(5)) ' bits']);
 % Centralizar a legenda na parte superior do gráfico
 set(hLegend, 'Position', [0.5, 0.85, 0.2, 0.2], 'Units', 'normalized', 'Location', 'north');
 grid on
