@@ -23,8 +23,8 @@ Tempo = T0:deltaT:Tf; % vetor tempo
 Xt = cos(100*pi*Tempo);
 
 
-resol = [2 4 6 8 16]; % número de bits
-erroAcumulado = [0 0 0 0 0]; %inicializado vetor de erroAcumulado
+resol = [2 4 6 8 10 16]; % número de bits
+erroAbsoluto = [0 0 0 0 0 0]; %inicializado vetor de erroAbsoluto
 
 figure (1)
 subplot(2,1,2)
@@ -38,7 +38,8 @@ for i = 1:length(resol)
     Yt = Yt + round(mi); % retorna os valores negativos
     
     %Faz a soma do erro absoluto para cada resolução diferente.
-    erroAcumulado(i) = sum(abs(abs(Xt)-abs(Yt)));
+    erroAbsoluto(i) = max(abs(abs(Xt)-abs(Yt)));
+    
     %Plota os valores de acordo com o método escolhido no inicio
     if (discreto == 1)
     stem(Tempo, Yt)
@@ -61,15 +62,15 @@ title("Sinal original");
 grid on
 if (erroAcumuladoPlot == 1)
 figure (2)
-stem(resol, erroAcumulado, 'filled');
-title("Erro Acumulado para diferentes resoluções")
+stem(resol, erroAbsoluto, 'filled');
+title("Erro máximo absoluto para diferentes resoluções")
 grid on
 % Definir os limites dos eixos
 xlim([1.7 17]) % Limite do eixo x de -0.5 até 17
-ylim([-0.2 35])   % Limite do eixo y de -1 até 35
+ylim([-0.2 0.5])   % Limite do eixo y de -1 até 35
 end
 
 if(erroAcumuladoPrint == 1)
 %Imprime o vetor dos diferentes erros acumulados no terminal
-erroAcumulado
+erroAbsoluto
 end
