@@ -1,7 +1,6 @@
 clear all
 close all
 clc
-
 %Variáveis de controle do código
 plotNRZ_Unipolar = 0;
 plotNRZ_Bipolar = 0;
