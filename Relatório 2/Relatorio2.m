@@ -1,14 +1,15 @@
 clear all
 close all
 clc
+
 %Variáveis de controle do código
-plotNRZ_Unipolar = 0;
-plotNRZ_Bipolar = 0;
-plotRZ_Unipolar = 0;
-plotRZ_Inverso = 0;
-plot_Manchester = 0;
-plot_4_PAM = 0;
-plot_8_PAM = 0;
+plotNRZ_Unipolar = 1;
+plotNRZ_Bipolar =  1;
+plotRZ_Unipolar =  1;
+plotRZ_Inverso =   1;
+plot_Manchester =  1;
+plot_4_PAM =       1;
+plot_8_PAM =       1;
 
 % Parâmetros
 fs = 1e3; % Frequência de amostragem, define a frequência máxima a ser analisada no espectro de frequência
