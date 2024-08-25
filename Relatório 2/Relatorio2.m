@@ -3,17 +3,17 @@ close all
 clc
 
 %Variáveis de controle do código
-plotNRZ_Unipolar = 1;
-plotNRZ_Bipolar =  1;
-plotRZ_Unipolar =  1;
-plotRZ_Inverso =   1;
-plot_Manchester =  1;
-plot_4_PAM =       1;
+plotNRZ_Unipolar = 0;
+plotNRZ_Bipolar =  0;
+plotRZ_Unipolar =  0;
+plotRZ_Inverso =   0;
+plot_Manchester =  0;
+plot_4_PAM =       0;
 plot_8_PAM =       1;
 
 % Parâmetros
-fs = 1e3; % Frequência de amostragem, define a frequência máxima a ser analisada no espectro de frequência
-nb = 100; % Número de bits/símbolos
+fs = 2e3; % Frequência de amostragem, define a frequência máxima a ser analisada no espectro de frequência
+nb = 10000; % Número de bits/símbolos
 sb = randi([0 1], 1, nb); % Geração de sequência de bits aleatórios
 nab = 8; % Número de amostras por bit/símbolo
 A = 1; % Amplitude do sinal
@@ -200,8 +200,10 @@ if (plot_4_PAM == 1)
     ylabel('Densidade Espectral de Potência');
 end
 
-% 8-PAM
-sb_pam8 = randi([0 7], 1, nb); % Geração de sequência de símbolos 8-PAM
+length
+
+%8-PAM
+sb_pam8 = randi([0 7], 1, nb) % Geração de sequência de símbolos 8-PAM
 M = 8; % Número de níveis (8-PAM)
 pam8_levels = [-7, -5, -3, -1, 1, 3, 5, 7]; % Definição dos níveis 8-PAM
 sPAM8 = pam8_levels(sb_pam8 + 1); % Mapeamento dos símbolos para níveis 8-PAM
@@ -228,5 +230,7 @@ if (plot_8_PAM == 1)
     title('Espectro de Potência do 8-PAM');
     xlabel('Frequência (Hz)');
     ylabel('Densidade Espectral de Potência');
+    
+close all
 end
 
