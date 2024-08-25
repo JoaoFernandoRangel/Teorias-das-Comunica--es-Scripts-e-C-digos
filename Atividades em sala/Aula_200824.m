@@ -52,6 +52,7 @@ subplot(2,1,2)
 plot(real(s4pam))
 xlim([0 400]);
 grid on
+%%
 close all
 plot(fftshift(abs(fft(s4pam))))
 
