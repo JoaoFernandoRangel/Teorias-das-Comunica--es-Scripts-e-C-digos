@@ -1,3 +1,4 @@
+%comentário teste
 clear
 A=1;
 Nb=10000;
