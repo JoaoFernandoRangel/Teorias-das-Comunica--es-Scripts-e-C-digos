@@ -27,15 +27,27 @@ Ts = 1/Fs; %Período entre amostras
 Ns = Nsim*nas; %Número de amostras
 df = Fs/Ns; %Incremento do vetor frequência
 freq = -Fs/2:df:(Fs/2-df); %Vetor de frequência
+
 seq_psk = reshape(repmat(Sdmod_psk,nas,1),1,Ns);
 seq_qam = reshape(repmat(Sdmod_qam,nas,1),1,Ns);
 sinal_psk = modulate(real(seq_psk), fc, Fs,'qam',imag(seq_psk));
 sinal_qam = modulate(real(seq_qam), fc, Fs, 'qam', imag(seq_qam));
-
 sinal_qam_prop = Qam_mod(real(seq_qam),fc,Fs,imag(seq_qam));
+% Definir a taxa de amostragem
+Fs = 10000; % Exemplo: 10 kHz
+% Definir as frequências de corte
+f1 = 1200; % 1.5 kHz
+f2 = 2800; % 2.5 kHz
+% Criar o filtro passa faixa
+d = designfilt('bandpassiir', 'FilterOrder', 80, ...
+               'HalfPowerFrequency1', f1, 'HalfPowerFrequency2', f2, ...
+               'SampleRate', Fs);
+% Exibir a resposta em frequência do filtro
+fvtool(d, 'Fs', Fs);
+y = filter(d,sinal_qam);
 % figure 2
 subplot 211
-plot(freq,fftshift(abs(fft(sinal_qam_prop))));
+plot(freq,fftshift(abs(fft(y))));
 grid on
 subplot 212
 plot(freq,fftshift(abs(fft(sinal_qam))));
