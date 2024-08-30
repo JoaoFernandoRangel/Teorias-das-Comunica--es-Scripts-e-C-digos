@@ -92,6 +92,8 @@ fc0 = [-1*ones(1,nsb/4) ones(1, nsb/2) -1*ones(1,nsb/4)];   %Filtro casado do 0
 snrzu1 = (reshape(repmat(sb, nsb,1),1,nsb*Nb)); %sinal nao retorno 0, bit 1
 snrzu0 = -snrzu1+1; %sinal nao retorno 0, bit 0
 
+
+
 ruidort = (reshape(repmat(rt, nsb,1),1,nsb*Nb)); %ruido 1x16000 amostras
 sinalgt = A*(snrzu1.*bit1 + snrzu0.*bit0); %sinal 1x16000 amostras
 
@@ -149,6 +151,7 @@ sinalrxt13 = sinalgt13+ruidort;
 
 sinalgt14 = A3(14)*(snrzu1.*bit1 + snrzu0.*bit0); %sinal 1x16000 amostras
 sinalrxt14 = sinalgt14+ruidort;
+
 
 srconv = conv(sinalrxt1,fc1); %A cada T amostras (16 já que nsb=16), ou tem um valor muito próximo de 0, ou muito próximo de 1
 srconv0 = conv(sinalrxt14,fc0);
