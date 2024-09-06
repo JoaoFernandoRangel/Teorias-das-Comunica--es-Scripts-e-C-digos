@@ -12,11 +12,9 @@ nab = Fs/Rb;
 sI = 2*(reshape(repmat(seqb(1:2:end),2*nab,1),1,nab*N))-1;
 sQ = 2*(reshape(repmat(seqb(2:2:end),2*nab,1),1,nab*N))-1;
 sb = sI-1 + 1i*(sQ-1);
-
 % subplot(1,2,1)
 % plot(real(sb), imag(sb));
 % grid on
-
 t = 0:Ts:(nab*N-1)*Ts;
 %Aqui é o modulador QPSK
 sinaltx = sI .* cos(2*pi*fc.*t) + sQ .* sin(2*pi*fc.*t);
