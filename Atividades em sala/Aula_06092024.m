@@ -1,0 +1,46 @@
+clear all
+close all
+clc
+N = 10000;
+seqb = randi([0,1],1,N);
+Rb = 10e3;
+fc = 20e3;
+Fs = 250e3;
+Ts = 1/Fs;
+Tb = 1/Rb;
+nab = Fs/Rb;
+sI = 2*(reshape(repmat(seqb(1:2:end),2*nab,1),1,nab*N))-1;
+sQ = 2*(reshape(repmat(seqb(2:2:end),2*nab,1),1,nab*N))-1;
+sb = sI-1 + 1i*(sQ-1);
+
+% subplot(1,2,1)
+% plot(real(sb), imag(sb));
+% grid on
+
+t = 0:Ts:(nab*N-1)*Ts;
+%Aqui é o modulador QPSK
+sinaltx = sI .* cos(2*pi*fc.*t) + sQ .* sin(2*pi*fc.*t);
+
+% subplot(1,2,2)
+% plot(t, sinaltx);
+% xlim([0 0.0009]);
+% grid on
+SNR = -6;
+sinalrx = awgn(sinaltx,SNR); %Passagem por canal com ruído
+% Daqui para baixo é o demodulador QPSK;
+srxI = sinalrx .* cos(2*pi*fc.*t);
+srxQ = sinalrx .* sin(2*pi*fc.*t);
+sbrxI = sum(reshape(srxI, 2*nab,N/2));
+sbrxQ = sum(reshape(srxQ, 2*nab,N/2));
+ssrx(1,:) = sbrxI;
+ssrx(2,:) = sbrxQ;
+sbrx = reshape(ssrx,1,N);
+seqbrx = sbrx>0;
+[ber,rt] = biterr(seqb,seqbrx)
+
+
+
+
+
+
+
