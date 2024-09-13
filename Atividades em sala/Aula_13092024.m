@@ -33,7 +33,7 @@ for k = 1:length(SNR)
     sinalpskrx = awgn(sinalpsktx, SNR(k));   
     demodpsk_qam; %Demodulador psk e qam
     seqspsk = mean(reshape(spskrx,nas,N));
-    angrx = atan(imag(seqspsk)/real(seqspsk));
+    angrx = atan(imag(seqspsk)./real(seqspsk));
     angrx(angrx<0) = 2*pi + angrx(angrx<0); % Ajuste de ângulo, soma uma volta no círculo
     simbpskrx = angrx*M./(2*pi);
     [bpsk(k),rtpsk(k)] = biterr(round(seqsimb), round(simbpskrx));
@@ -41,37 +41,6 @@ for k = 1:length(SNR)
     simbqamrx = qamdemod(seqsqamrx, M);
     [bqam(k),rtqam(k)] = biterr(round(seqsimb), round(simbqamrx));
 end
-% for k = 1:length(SNR)
-%     sinalqamrx = awgn(sinalqamtx, SNR(k));
-%     sinalpskrx = awgn(sinalpsktx, SNR(k));   
-%     demodpsk_qam; % Demodulador PSK e QAM
-%     
-%     % Processamento do sinal PSK
-%     seqspsk = mean(reshape(spskrx, nas, N));
-%     angrx = atan(imag(seqspsk) ./ real(seqspsk));
-%     angrx(angrx < 0) = 2*pi + angrx(angrx < 0); % Ajuste de ângulo
-%     simbpskrx = angrx * M / (2 * pi);
-%     
-%     % Ajustando o tamanho de seqsimb e simbpskrx
-%     min_len = min(length(seqsimb), length(simbpskrx));
-%     seqsimb_adj = round(seqsimb(1:min_len));
-%     simbpskrx_adj = round(simbpskrx(1:min_len));
-%     
-%     % Comparação de bits PSK
-%     [bpsk(k), rtpsk(k)] = biterr(seqsimb_adj, simbpskrx_adj);
-%     
-%     % Processamento do sinal QAM
-%     seqsqamrx = mean(reshape(sqamrx, nas, N));
-%     simbqamrx = qamdemod(seqsqamrx, M);
-%     
-%     % Ajustando o tamanho de seqsimb e simbqamrx
-%     min_len_qam = min(length(seqsimb), length(simbqamrx));
-%     seqsimb_adj_qam = round(seqsimb(1:min_len_qam));
-%     simbqamrx_adj = round(simbqamrx(1:min_len_qam));
-%     
-%     % Comparação de bits QAM
-%     [bqam(k), rtqam(k)] = biterr(seqsimb_adj_qam, simbqamrx_adj);
-% end
 
 subplot(2,2,1)
 plot(real(simpsk), imag(simpsk),'*b');
@@ -90,6 +59,7 @@ plot(real(simqam), imag(simqam),'*b');
 grid on
 subplot(2,2,4)
 plot(SNR, rtpsk);
+grid on
 
 
 
